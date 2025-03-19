@@ -9,4 +9,5 @@ class Stock extends Model
 {
     /** @use HasFactory<\Database\Factories\StockFactory> */
     use HasFactory;
+    protected $fillable = ['product_id','attributs', 'quantity'];
 }

@@ -23,7 +23,7 @@ class ProductFactory extends Factory
                 'ru' => 'Привет, мир!'
             ],
             'description' => [
-                'uz' => fake()->sentence(5),
+                'uz' => fake()->sentence(13),
                 'ru' => 'Привет, мир! Это мой первый код на Rus. Я изучаю этот язык программирования. Rus — быстрый, безопасный и современный язык!'
             ],
             'price' => rand(50000, 10000000),

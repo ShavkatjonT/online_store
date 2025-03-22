@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             AttributeSeeder::class,
             ValueSeeder::class,
+            DeliveryMethodSeeder::class,
+            PaymentTypeSeeder::class,
+            UserAddressSeeder::class
         ]);
     }
 }

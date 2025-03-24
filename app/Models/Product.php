@@ -33,4 +33,9 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class);
     }
+    public function withStock($stockId): static
+    {
+        $this->stocks = [$this->stocks()->findOrFail($stockId)];
+        return $this;
+    }
 }

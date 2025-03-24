@@ -19,11 +19,13 @@ class OrderResource extends JsonResource
             'comment' => $this->comment,
             'sum' => $this->sum,
             'sum' => $this->sum,
+            'status' => $this->status,
             'user' => $this->user,
             'products' => $this->products,
             'address' => $this->address,
             'payment_type' => $this->paymentType,
-            'delivery_method' => $this->deliveryMethod
+            'delivery_method' => $this->deliveryMethod,
+
         ];
     }
 }

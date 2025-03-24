@@ -22,6 +22,13 @@ class PaymentTypeSeeder extends Seeder
 
         PaymentType::create([
             'name' => [
+                'uz' => 'Terminal',
+                'ru' => 'Терминал',
+            ],
+        ]);
+
+        PaymentType::create([
+            'name' => [
                 'uz' => 'Click',
                 'ru' => 'Click',
             ],
@@ -34,12 +41,7 @@ class PaymentTypeSeeder extends Seeder
             ],
         ]);
 
-        PaymentType::create([
-            'name' => [
-                'uz' => 'Terminal',
-                'ru' => 'Терминал',
-            ],
-        ]);
+
 
         PaymentType::create([
             'name' => [

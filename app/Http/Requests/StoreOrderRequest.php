@@ -40,12 +40,12 @@ class StoreOrderRequest extends FormRequest
         
         */
         return [
-            'delivery_method_id' => ['required', 'numeric'],
-            'payment_type_id' => ['required', 'numeric'],
+            'delivery_method_id' => ['required', 'numeric', 'exists:delivery_methods,id'],
+            'payment_type_id' => ['required', 'numeric', 'exists:payment_types,id'],
             'products' => ['required', 'array'],
             'products.*' => ['required', 'array'], //'array:'
-            'products.*.product_id' => ['required', 'numeric'],
-            'products.*.stock_id' => ['nullable', 'numeric'],
+            'products.*.product_id' => ['required', 'numeric', 'exists:products,id'],
+            'products.*.stock_id' => ['nullable', 'numeric', 'exists:stocks,id'],
             'products.*.quantity' => ['required', 'numeric'],
 
             // Faqat ruxsat etilgan maydonlarga cheklov qo‘yish:
@@ -62,10 +62,10 @@ class StoreOrderRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return  [
-            "delivery_method_id"=>"Id kiring"
-        ];
-    }
+    // public function messages()
+    // {
+    //     return  [
+    //         "delivery_method_id" => "Id kiring"
+    //     ];
+    // }
 }

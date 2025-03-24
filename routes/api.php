@@ -10,6 +10,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserPaymentCardsController;
 use App\Models\User;
@@ -34,6 +36,8 @@ Route::prefix('v1')->group(function () {
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('orders', OrderController::class);
+    Route::apiResource('status', StatusController::class);
+    Route::apiResource('status.orders', StatusOrderController::class);
     Route::apiResource('user-address', UserAddressController::class);
     Route::apiResource('user-payment-cards', UserPaymentCardsController::class);
 });

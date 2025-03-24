@@ -18,7 +18,8 @@ class Order extends Model
         'comment',
         'sum',
         'products',
-        'address'
+        'address',
+        'status_id'
     ];
     protected $casts = [
         'products' => 'array',
@@ -36,5 +37,10 @@ class Order extends Model
     public function deliveryMethod(): BelongsTo
     {
         return $this->belongsTo(DeliveryMethod::class);
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
     }
 }

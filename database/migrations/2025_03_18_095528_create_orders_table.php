@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sum');
             $table->json('products');
             $table->text('address')->nullable();
+            $table->foreignId('status_id')->default(1)->constrained();
+
             $table->timestamps();
         });
     }

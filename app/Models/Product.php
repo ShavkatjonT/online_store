@@ -38,4 +38,10 @@ class Product extends Model
         $this->stocks = [$this->stocks()->findOrFail($stockId)];
         return $this;
     }
+
+
+    public function review(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

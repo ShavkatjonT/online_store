@@ -10,19 +10,16 @@ use Illuminate\Database\Eloquent\Collection;
 class UserAddressController extends Controller
 {
 
-    public function index(): Collection
+    public function index()
     {
-        return auth()->user()->addresses;
+        return $this->response(auth()->user()->addresses);
     }
 
 
     public function store(StoreUserAddressRequest $request)
     {
-
-        auth()->user()->addresses()->create($request->toArray());
-        return response()->json([
-            'success' => true
-        ]);
+        $address = auth()->user()->addresses()->create($request->toArray());
+        return $this->success('shipping address created', $address);
     }
 
     public function show(UserAddress $userAddress) {}

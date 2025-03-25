@@ -10,6 +10,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\UserAddressController;
@@ -22,8 +24,8 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 });
 
-Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+
+
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('categories', CategoryController::class);
@@ -34,10 +36,17 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+    Route::get('user', [AuthController::class, 'user']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
+    Route::get('logout', [AuthController::class, 'logout']);
+
+
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('status', StatusController::class);
     Route::apiResource('status.orders', StatusOrderController::class);
     Route::apiResource('user-address', UserAddressController::class);
     Route::apiResource('user-payment-cards', UserPaymentCardsController::class);
+    Route::apiResource('reviews', ReviewController::class);
+    Route::apiResource('products.reviews', ProductReviewController::class);
 });

@@ -46,7 +46,7 @@ class StoreOrderRequest extends FormRequest
             'products.*' => ['required', 'array'], //'array:'
             'products.*.product_id' => ['required', 'numeric', 'exists:products,id'],
             'products.*.stock_id' => ['nullable', 'numeric', 'exists:stocks,id'],
-            'products.*.quantity' => ['required', 'numeric'],
+            'products.*.quantity' => ['required', 'numeric', 'min:1'],
 
             // Faqat ruxsat etilgan maydonlarga cheklov qo‘yish:
             'products.*' => function ($attribute, $value, $fail) {

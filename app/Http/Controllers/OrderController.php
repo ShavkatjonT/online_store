@@ -11,12 +11,19 @@ use App\Models\Product;
 use App\Models\Stock;
 use App\Models\UserAddress;
 
+use function Laravel\Prompts\error;
+
 class OrderController extends Controller
 {
 
     public function index()
     {
-        return auth()->user()->orders;
+        if (request()->has('status_id')) {
+            return $this->response(OrderResource::collection(
+                auth()->user()->orders()->where('status_id', request('status_id'))->paginate(10)
+            ));
+        }
+        return $this->response(OrderResource::collection(auth()->user()->orders()->paginate(10)));
     }
 
     public function store(StoreOrderRequest $request)
@@ -64,23 +71,17 @@ class OrderController extends Controller
                 }
             }
 
-            return response()->json([
-                'success' => true,
-            ]);
+            return $this->success('order created', [$order]);
         } else {
-            return response([
-                'success' => false,
-                'message' => 'some product not found or does not have in inventory',
-                'not_found_products' => $notFoundProducts,
-
-            ]);
+            $message = 'some product not found or does not have in inventory';
+            return $this->error($message, ['not_found_products' => $notFoundProducts]);
         }
     }
 
 
     public function show(Order $order)
     {
-        return new OrderResource($order);
+        return $this->response(new OrderResource($order));
     }
 
 

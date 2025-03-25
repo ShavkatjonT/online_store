@@ -64,6 +64,10 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function review(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 
     public function hasFavorite($favorites_id): bool
     {

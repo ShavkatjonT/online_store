@@ -20,10 +20,10 @@ class OrderController extends Controller
     {
         if (request()->has('status_id')) {
             return $this->response(OrderResource::collection(
-                auth()->user()->orders()->where('status_id', request('status_id'))->paginate(10)
+                $this->auth()->orders()->where('status_id', request('status_id'))->paginate(10)
             ));
         }
-        return $this->response(OrderResource::collection(auth()->user()->orders()->paginate(10)));
+        return $this->response(OrderResource::collection($this->auth()->orders()->paginate(10)));
     }
 
     public function store(StoreOrderRequest $request)

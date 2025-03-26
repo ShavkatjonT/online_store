@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('values', function (Blueprint $table) {
+        Schema::create('payment_card_types', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->morphs('valueable');
+            $table->string('name');
+            $table->string('code');
+            $table->text('icon')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('values');
+        Schema::dropIfExists('payment_card_types');
     }
 };

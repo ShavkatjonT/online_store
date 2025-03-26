@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Value;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Attribute;
 use Illuminate\Database\Seeder;
 
 class ValueSeeder extends Seeder
@@ -13,22 +12,21 @@ class ValueSeeder extends Seeder
      */
     public function run(): void
     {
-        Value::create([
-            'attribute_id' => 1,
+
+        $attribute = Attribute::find(1);
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'qizil',
                 'ru' => 'красный',
             ],
         ]);
-        Value::create([
-            'attribute_id' => 1,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'yashil',
                 'ru' => 'зеленый',
             ]
         ]);
-        Value::create([
-            'attribute_id' => 1,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'ko\'k',
                 'ru' => 'синий',
@@ -36,22 +34,20 @@ class ValueSeeder extends Seeder
         ]);
 
 
-        Value::create([
-            'attribute_id' => 3,
+        $attribute = Attribute::find(2);
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'kichik',
                 'ru' => 'маленький',
             ]
         ]);
-        Value::create([
-            'attribute_id' => 3,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'o\'rta',
                 'ru' => 'средний',
             ],
         ]);
-        Value::create([
-            'attribute_id' => 3,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'katta',
                 'ru' => 'большой',
@@ -59,27 +55,24 @@ class ValueSeeder extends Seeder
         ]);
 
 
-        Value::create([
-            'attribute_id' => 2,
+        $attribute = Attribute::find(3);
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'paxta',
                 'ru' => 'хлопок',
             ],
         ]);
-        Value::create([
-            'attribute_id' => 2,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'poliester',
                 'ru' => 'полиэстер',
             ],
         ]);
-        Value::create([
-            'attribute_id' => 2,
+        $attribute->values()->create([
             'name' => [
                 'uz' => 'ipek',
                 'ru' => 'шелк',
             ],
         ]);
-        
     }
 }

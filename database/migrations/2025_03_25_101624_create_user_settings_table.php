@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_payment_cards', function (Blueprint $table) {
+        Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('payment_card_type_id')->constrained()->cascadeOnDelete();
-            $table->text('name')->nullable();
-            $table->text('number');
-            $table->text('last_four_numbers');
-            $table->text('exp_date');
-            $table->text('holder_name');
+            $table->foreignId('setting_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('value_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->boolean('switch')->nullable()->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_payment_cards');
+        Schema::dropIfExists('user_settings');
     }
 };

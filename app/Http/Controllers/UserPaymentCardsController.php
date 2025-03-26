@@ -5,62 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\UserPaymentCards;
 use App\Http\Requests\StoreUserPaymentCardsRequest;
 use App\Http\Requests\UpdateUserPaymentCardsRequest;
+use App\Http\Resources\UserPaymentCardResource;
+use Illuminate\Http\Request;
 
 class UserPaymentCardsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        return $this->response(UserPaymentCardResource::collection($this->auth()->paymentCards));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function store(StoreUserPaymentCardsRequest  $request)
     {
-        //
+
+        // return $request->payment_card_type_id;
+
+
+        $card = $this->auth()->paymentCards()->create([
+            'number' => encrypt($request->number),
+            'payment_card_type_id' => $request->payment_card_type_id,
+            'exp_date' => encrypt($request->exp_date),
+            'name' => encrypt($request->name),
+            'holder_name' => encrypt($request->holder_name),
+            'last_four_numbers' => encrypt(substr($request->number, -4)),
+
+        ]);
+
+        return $this->success('user card added', $card);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreUserPaymentCardsRequest $request)
+
+    public function show($id)
     {
-        //
+        return $this->response(new UserPaymentCardResource($this->auth()->paymentCards()->find($id)));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(UserPaymentCards $userPaymentCards)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UserPaymentCards $userPaymentCards)
+    public function destroy($id)
     {
-        //
-    }
+        if ($this->auth()->paymentCards()->find($id)->delete()) {
+            return $this->success('User card deleted');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserPaymentCardsRequest $request, UserPaymentCards $userPaymentCards)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UserPaymentCards $userPaymentCards)
-    {
-        //
+        return $this->error('Failed to delete user card');
     }
 }

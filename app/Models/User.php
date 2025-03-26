@@ -69,6 +69,19 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function paymentCards(): HasMany
+    {
+        return $this->hasMany(UserPaymentCards::class);
+    }
+
+    public function settings(): HasMany
+    {
+        return $this->hasMany(UserSetting::class, 'user_id', 'id');
+    }
+
+
+
+
     public function hasFavorite($favorites_id): bool
     {
         return $this->favorites()->where('product_id', $favorites_id)->exists();

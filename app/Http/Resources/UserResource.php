@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             "phone" => $this->phone,
             "email" => $this->email,
             "created_at" => $this->created_at,
+            'settings' => UserSettingResource::collection($this->settings)
         ];
     }
 }

@@ -16,7 +16,7 @@ abstract class Controller
     }
 
 
-    public function response($data)
+    public function response($data): JsonResponse
     {
         return response()->json([
             'data' => $data,

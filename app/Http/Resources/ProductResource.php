@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProductResource extends JsonResource
 {
 
+
     public function toArray(Request $request): array
     {
         return [
@@ -19,7 +20,8 @@ class ProductResource extends JsonResource
             'inventory' => StockResource::collection($this->stocks),
             'cerated_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'order_quantity' => $this->when(isset($this->quantity), $this->quantity)
+            'order_quantity' => $this->when(isset($this->quantity), $this->quantity),
+            'photo'=>PhoteResource::collection($this->photos),
         ];
     }
 }

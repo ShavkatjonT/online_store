@@ -19,6 +19,9 @@ class CategorySeeder extends Seeder
             ]
         ]);
 
+
+
+
         Category::create([
             'name' => [
                 'uz' => 'Divan',
@@ -26,12 +29,73 @@ class CategorySeeder extends Seeder
             ]
         ]);
 
-        Category::create([
+        $category = Category::create([
             'name' => [
                 'uz' => 'Kreslo',
                 'ru' => 'Кресло',
             ]
         ]);
+
+
+        $category->childCategories()->create([
+            'name' => [
+                'uz' => 'Offis',
+                'ru' => 'Офис',
+            ]
+        ]);
+
+        $category->childCategories()->create([
+            'name' => [
+                'uz' => 'Yumshoq',
+                'ru' => 'Мягкий',
+            ]
+        ]);
+
+        $childCategoriey = $category->childCategories()->create([
+            'name' => [
+                'uz' => 'Gaming',
+                'ru' => 'Игровой',
+            ]
+        ]);
+
+        $childCategoriey->childCategories()->create(
+            [
+                'name' => [
+                    'uz' => 'RGB',
+                    'ru' => 'RGB',
+                ]
+            ]
+        );
+
+
+        $childCategoriey->childCategories()->create(
+            [
+                'name' => [
+                    'uz' => 'Qora',
+                    'ru' => 'Черный',
+                ]
+            ]
+        );
+
+        $childCategoriey->childCategories()->create(
+            [
+                'name' => [
+                    'uz' => 'Pushti',
+                    'ru' => 'Розовый',
+                ]
+            ]
+        );
+
+        $childCategoriey->childCategories()->create(
+            [
+                'name' => [
+                    'uz' => 'Oq',
+                    'ru' => 'Белый',
+                ]
+            ]
+        );
+
+
 
         Category::create([
             'name' => [

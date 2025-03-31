@@ -6,14 +6,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use  HasApiTokens, HasFactory, Notifiable;
+    use  HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,10 +48,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
 
     public function favorites(): BelongsToMany
     {
@@ -78,12 +77,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserSetting::class, 'user_id', 'id');
     }
-
-
-
-
     public function hasFavorite($favorites_id): bool
     {
         return $this->favorites()->where('product_id', $favorites_id)->exists();
+    }
+    public function photos(): MorphMany
+    {
+        return $this->morphMany(Photo::class, 'photoable');
     }
 }

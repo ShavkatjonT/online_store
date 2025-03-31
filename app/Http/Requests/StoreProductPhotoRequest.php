@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductRequest extends FormRequest
+class StoreProductPhotoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,15 +14,16 @@ class StoreProductRequest extends FormRequest
         return request()->user()->can('product:create');
     }
 
-
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'exists:categories,id'],
-            'name' => ['required'],
-            'description' => ['required'],
-            'price' => ['required'],
-
+            'photos' => ['required', 'array'],
+            'photos.*' => [ 'file', 'mimes:jpg,jpeg,png','max:512'],
         ];
     }
 }

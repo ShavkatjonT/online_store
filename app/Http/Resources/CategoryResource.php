@@ -13,6 +13,11 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
+            'icon' => $this->icon,
+            'order' => $this->order,
+            'parent_id' => $this->parent_id,
+            'child_categories' => $this->childCategories, //self::collection($this->childCategories)
+            // 'parent_categories' => $this->parentCategory, //
         ];
     }
 }

@@ -22,7 +22,16 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'phone' => '+998901234567',
         ]);
-        $admin->roles()->attach(1);
+        $admin->assignRole('admin');
+
+        $defaultUser = User::create([
+            'first_name' => 'Ali',
+            'last_name' => 'Gafarov',
+            'email' => 'ali@gmail.com',
+            'password' => Hash::make('test'),
+            'phone' => '+99890234567',
+        ]);
+        $defaultUser->assignRole('editor');
 
         $defaultUser = User::create([
             'first_name' => 'Shavkatjon',
@@ -31,8 +40,33 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test'),
             'phone' => '+99890562935',
         ]);
-        $defaultUser->roles()->attach(2);
 
-        User::factory()->count(10)->hasAttached([Role::find(2)])->create();
+        $defaultUser->assignRole('shop-manager');
+
+        $defaultUser = User::create([
+            'first_name' => 'Jonibek',
+            'last_name' => 'Adxamov',
+            'email' => 'jonibek@gmail.com',
+            'password' => Hash::make('test'),
+            'phone' => '+998902345621',
+        ]);
+        $defaultUser->assignRole('customer');
+
+        $defaultUser = User::create([
+            'first_name' => 'Zohidjon',
+            'last_name' => 'Kamolidinov',
+            'email' => 'zohidjon@gmail.com',
+            'password' => Hash::make('test'),
+            'phone' => '+998907645621',
+        ]);
+        $defaultUser->assignRole('helpdesk-support');
+
+
+
+
+        $users =  User::factory()->count(10)->create();
+        foreach ($users as $user) {
+            $user->assignRole('customer');
+        }
     }
 }

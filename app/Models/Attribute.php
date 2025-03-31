@@ -12,7 +12,6 @@ class Attribute extends Model
     /** @use HasFactory<\Database\Factories\AttributeFactory> */
     use HasFactory;
     protected $fillable = ['name'];
-
     public function values(): MorphMany
     {
         return $this->morphMany(Value::class, 'valueable');

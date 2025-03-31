@@ -11,10 +11,14 @@ use App\Models\Product;
 use App\Models\Stock;
 use App\Models\UserAddress;
 
-use function Laravel\Prompts\error;
-
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Order::class, 'order');
+    }
+
+
 
     public function index()
     {
@@ -85,6 +89,7 @@ class OrderController extends Controller
     }
 
 
+
     public function edit(Order $order) {}
 
 
@@ -92,5 +97,10 @@ class OrderController extends Controller
 
 
 
-    public function destroy(Order $order) {}
+    public function destroy(Order $order)
+    {
+        // $this->authorize('delete');
+        $order->delete();
+        return $this->success('order deleted', []);
+    }
 }

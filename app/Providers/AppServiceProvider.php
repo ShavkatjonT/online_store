@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Resources\OrderResource;
+use App\Models\Order;
+use App\Observers\OrderObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-// use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole("admin") ? true : null;
         });
+        Order::observe(OrderObserver::class);
         // OrderResource::withoutWrapping();
 
     }

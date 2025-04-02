@@ -14,4 +14,5 @@ Route::prefix('stats')->middleware('auth:sanctum')->group(function () {  // For 
 
 Route::prefix('')->middleware('auth:sanctum')->group(function () {  // For admin only
     Route::apiResource('orders', OrderController::class);
+
 });

@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
         $products = Product::factory()->count(50)->create();
         foreach ($products as $product) {
             $product->stocks()->create([
-                'quantity' => rand(1, 10),
+                'quantity' => rand(100, 1000),
                 'attributs' => json_encode(
                     [
                         [
@@ -33,10 +33,11 @@ class ProductSeeder extends Seeder
                         ],
 
                     ],
-                )
+                ),
+                'added_price' => rand(1000000, 6000000),
             ]);
             $product->stocks()->create([
-                'quantity' => rand(1, 10),
+                'quantity' => rand(100, 1000),
                 'attributs' => json_encode(
                     [
                         [
@@ -53,10 +54,11 @@ class ProductSeeder extends Seeder
                         ],
 
                     ],
-                )
+                ),
+
             ]);
             $product->stocks()->create([
-                'quantity' => rand(1, 10),
+                'quantity' => rand(100, 1000),
                 'attributs' => json_encode(
                     [
                         [
@@ -73,7 +75,9 @@ class ProductSeeder extends Seeder
                         ],
 
                     ],
-                )
+                ),
+                'added_price' => rand(500000, 900000),
+
             ]);
         }
     }

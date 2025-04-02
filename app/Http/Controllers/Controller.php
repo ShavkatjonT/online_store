@@ -16,8 +16,6 @@ abstract class Controller  extends RoutingController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-
-
     public function getClosedOrdersQuery(array $date): Builder
     {
         return Order::query()

@@ -21,8 +21,11 @@ class UserResource extends JsonResource
             "full_name" => $this->first_name . ' ' . $this->last_name,
             "phone" => $this->phone,
             "email" => $this->email,
+            'settings' => UserSettingResource::collection($this->settings),
+            'roles'=>$this->getRoleNames(),
             "created_at" => $this->created_at,
-            'settings' => UserSettingResource::collection($this->settings)
-        ];
+            'photo'=>PhoteResource::collection($this->photos),
+
+            ];
     }
 }

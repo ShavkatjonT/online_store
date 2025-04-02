@@ -20,7 +20,7 @@ class RolePermissonSeeder extends Seeder
         $entities = ['role', 'permission', 'user'];
         $actions = ['viewAny', 'view',  'create', 'update', 'delete', 'restore'];
 
-        //* $adminPermissions = 
+        //* $adminPermissions =
         collect($entities)->flatMap(function ($entity) use ($actions) {
             return collect($actions)->map(function ($action) use ($entity) {
                 return Permission::create(['name' => "{$entity}:{$action}"]);
@@ -71,7 +71,7 @@ class RolePermissonSeeder extends Seeder
 
 
         $role = Role::create(['name' => 'shop-manager']);
-        $entities = ['order', 'product', 'stock', 'category', 'review', 'attribute', 'value', 'deliver-method', 'payment-type'];
+        $entities = ['order', 'product', 'stock', 'category', 'review', 'attribute', 'value', 'deliver-method', 'payment-type', 'discount'];
         $actions = ['viewAny', 'view', 'create', 'update', 'delete', 'restore'];
 
         // Asosiy permissionlarni yaratish

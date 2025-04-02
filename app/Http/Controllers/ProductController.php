@@ -37,6 +37,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+
         return $this->response(new ProductResource($product::with('stocks')->find($product->id)));
     }
 

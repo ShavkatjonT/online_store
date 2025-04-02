@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeliveryMethod;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -35,19 +36,20 @@ class OrderController extends Controller
         $sum = 0;
         $products = [];
         $notFoundProducts = [];
-
         $address = UserAddress::find($request->address_id);
-
+        $deliveryMethod = DeliveryMethod::findOrFail($request->delivery_method_id);
         foreach ($request['products'] as $requestProduct) {
             $product = Product::with('stocks')->findOrFail($requestProduct['product_id']);
             $product->quantity = $requestProduct['quantity'];
             if ($product->stocks()->find($requestProduct['stock_id']) && $product->stocks()->find($requestProduct['stock_id'])->quantity >= $requestProduct['quantity']) {
                 $productWithStock = $product->withStock($requestProduct['stock_id']);
-                $productResource = new ProductResource($productWithStock);
-                $sum += $productResource['price']; // * $product['quantity'];
+                $productResource = (new ProductResource($productWithStock))->resolve();
+
+                $sum += $productResource['discounted_price'] ?? $productResource['price']; // * $product['quantity'];
+                $sum+= $productWithStock->stocks[0]->added_price ?? 0;
 
                 // dd($productResource);
-                $products[] = $productResource->resolve();
+                $products[] = $productResource;
             } else {
                 $requestProduct['we_have'] = $product->stocks()->find($requestProduct['stock_id'])->quantity;
                 $notFoundProducts[] = $requestProduct;
@@ -55,7 +57,9 @@ class OrderController extends Controller
         }
 
         if ($notFoundProducts == [] && $product != []  && $sum != 0) {
-            // return in_array($request['payment_type_id'], [1, 2]) ? 1 : 10;
+
+            $sum+=$deliveryMethod->sum;
+
             $order = auth()->user()->orders()->create([
                 "comment" => $request->comment,
                 "delivery_method_id" => $request->delivery_method_id,

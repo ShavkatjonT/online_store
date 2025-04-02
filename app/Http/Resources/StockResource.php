@@ -18,6 +18,7 @@ class StockResource extends JsonResource
         $result = [
             'quantity' => $this->quantity,
             'stock_id' => $this->id,
+            'added_price'=>$this->added_price,
         ];
 
         foreach ($attributes as $value) {

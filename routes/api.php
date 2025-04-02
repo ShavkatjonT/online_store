@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductPhotoController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProductController;
@@ -21,17 +25,13 @@ use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserPaymentCardsController;
 use App\Http\Controllers\UserSettingController;
-use App\Models\User;
-
 
 Route::prefix('auth')->group(function () {  // authenticator
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
+    Route::post('change-password', [AuthController::class, 'changePassword'])->middleware('auth:sanctum');
+    Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
-
-//Route::prefix('admin')->middleware('auth:sanctum')->group(function () {  // For admin only
-//
-//});
 
 Route::prefix('v1')->group(function () {  // Open to everyone
     Route::get('products/{product}/related', [ProductController::class, 'related']);
@@ -44,14 +44,18 @@ Route::prefix('v1')->group(function () {  // Open to everyone
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () { // Only for registered users
     Route::get('user', [AuthController::class, 'user']);
-    Route::post('change-password', [AuthController::class, 'changePassword']);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::post('roles/assign', [RoleController::class, 'assign']);
+    Route::apiResource('permissions', PermissionController::class);
+    Route::post('permissions/assign', [PermissionController::class, 'assign']);
 
-    Route::get('logout', [AuthController::class, 'logout']);
+    Route::apiResource('photos', PhotoController::class);
     Route::apiResource('favorites', FavoriteController::class);
+    Route::apiResource('discounts', DiscountController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('status', StatusController::class);
-    Route::apiResource('photos', PhotoController::class);
-
+    Route::apiResource('users.photos', UserPhotoController::class);
     Route::apiResource('products.photos', ProductPhotoController::class);
     Route::apiResource('status.orders', StatusOrderController::class);
     Route::apiResource('user-address', UserAddressController::class);
